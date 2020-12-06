@@ -64,7 +64,7 @@ const fetcher = async (...args, token) => {
 
 function* getData(...args) {
   const response = yield call('key', fetcher, ...args);
-  setItem(dataKey, () => response);
+  setItem('key', () => response);
 }
 
 const Component = () => {
