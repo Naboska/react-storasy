@@ -37,6 +37,8 @@ npm install @storasy/core @storasy/react
 
 ## [API](https://github.com/Naboska/storasy#API)
 
+API for @storasy/core
+
 ## Examples
 
 - [Configuration](https://github.com/Naboska/storasy#configuration)
