@@ -35,7 +35,7 @@ Or with npm:
 npm install @storasy/core @storasy/react
 ```
 
-##[API](https://github.com/Naboska/storasy#API)
+## [API](https://github.com/Naboska/storasy#API)
 
 ## Examples
 
