@@ -46,6 +46,7 @@ The hook subscribes to the change by key.
 
 ```tsx
 import { useStorasy } from '@storasy/react';
+import { call, setItem } from '@storasy/core';
 
 type TStorasyData = {
   a: number;
@@ -53,6 +54,17 @@ type TStorasyData = {
 
 const INITIAL_DATA: TStorasyData = {
   a: 0,
+}
+
+// args = all arguments from the generator are passed
+const fetcher = async (...args, token) => {
+  return await fetch('any url', { signal: token })
+    .then(e => e.json())
+};
+
+function* getData(...args) {
+  const response = yield call('key', fetcher, ...args);
+  setItem(dataKey, () => response);
 }
 
 const Component = () => {
