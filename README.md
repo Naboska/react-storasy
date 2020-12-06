@@ -12,13 +12,16 @@
 </p>
 
 ![React Storasy Header](https://github.com/Naboska/react-storasy/raw/main/media/logo.png)
-library for working with asynchronous data
+Library for working with asynchronous data.
+The library uses the [Storasy](https://github.com/Naboska/storasy) core.
 
 **status**: in development
 
 <br/>
 
 ## Usage
+
+<br/>
 
 Inside your project directory, run in terminal:
 
