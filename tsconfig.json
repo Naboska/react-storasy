@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es5",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "downlevelIteration": true,
+    "lib": ["ESNext", "dom"],
+  },
+  "exclude": ["**/*.test.tsx"]
+}
