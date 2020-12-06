@@ -1,0 +1,42 @@
+{
+  "name": "@storasy/react",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Dmitry Filatov",
+    "email": "Naboos@yandex.com",
+    "url": "https://github.com/Naboska"
+  },
+  "homepage": "https://github.com/Naboska/react-storasy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Naboska/react-storasy"
+  },
+  "bugs": {
+    "url": "https://github.com/Naboska/react-storasy/issues"
+  },
+  "keywords": [
+    "react",
+    "javascript",
+    "async",
+    "generator",
+    "store"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "devDependencies": {},
+  "scripts": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint"
+    ]
+  }
+}
