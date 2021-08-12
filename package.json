@@ -28,11 +28,11 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "peerDependencies": {
-    "@storasy/core": "^0.0.9",
+    "@storasy/core": "^0.2.3",
     "react": "^16.8.6"
   },
   "devDependencies": {
-    "@storasy/core": "^0.0.9",
+    "@storasy/core": "^0.2.3",
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^26.0.16",
     "@types/react": "^17.0.0",

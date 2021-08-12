@@ -1,35 +1,52 @@
-import { useCallback, useEffect, useState } from 'react';
-import {
-  getItem,
-  subscribe,
-  removeSubscriber,
-  runner,
-  TStoreItemData,
-  getInitialItem,
-} from '@storasy/core';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { TStorasyRunOptions, TStorasyItem } from '@storasy/core';
 
-export const useStorasy = <Data>(
+import { useStorasyClient } from './use-storasy-client';
+
+interface IUseStorasyOptions<ItemState, Params = any> extends TStorasyRunOptions<Params> {
+  initialState?: ItemState;
+}
+
+function* clearGenerator() {}
+
+export const useStorasy = <ItemState, Params>(
   key: string,
-  generator?: () => Generator<any>
-): [TStoreItemData<Data>, () => void] => {
-  const [state, setState] = useState<TStoreItemData<Data>>(getItem(key) || getInitialItem());
+  generator?: null | ((params?: Params) => Generator<any>),
+  options?: IUseStorasyOptions<ItemState>
+) => {
+  const { initialState, params, enabled } = options ?? {};
 
-  const run = useCallback(() => {
-    if (generator) runner(key, generator());
-  }, [key, generator]);
+  const storasyClient = useStorasyClient();
+
+  const [itemState, setItemState] = useState<TStorasyItem<ItemState>>(
+    storasyClient.create(key, initialState).getItem()
+  );
+
+  const refetchRef = useRef(null);
 
   useEffect(() => {
-    const subscriber = (data: TStoreItemData<Data>) => setState(data);
-    subscribe(key, setState);
+    const item = storasyClient.get<ItemState>(key);
+
+    const { refetch, cancel } = storasyClient.run<ItemState, Params>(
+      key,
+      generator || clearGenerator,
+      {
+        enabled: enabled || Boolean(generator),
+        params,
+      }
+    );
+
+    refetchRef.current = refetch;
+
+    const unsubscribe = item.subscribe(setItemState);
 
     return () => {
-      removeSubscriber(key, subscriber);
+      if (storasyClient.include(key)) {
+        cancel();
+        unsubscribe();
+      }
     };
-  }, [key]);
+  }, [params, enabled]);
 
-  useEffect(() => {
-    if (generator) run();
-  }, []);
-
-  return [state, run];
+  return useMemo(() => ({ ...itemState, refetch: refetchRef.current }), [itemState]);
 };

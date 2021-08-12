@@ -532,10 +532,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@storasy/core@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@storasy/core/-/core-0.0.9.tgz#741483afd9024802b29d7466b3bacbd3edd945de"
-  integrity sha512-AlJL0KQ6MuKXwaCbtAtsEVN6FlKofeiQnfy/dFV2TNVWMNm3aijhDc8XkCq0zmwkCt/fietMiC5VviMafOXwuQ==
+"@storasy/core@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@storasy/core/-/core-0.2.3.tgz#8f718efeaa5d21d16eeb010d575ae5fdc1d1a799"
+  integrity sha512-jFzziAhRClqyncFjmM9eq1nkOHyGNEBu5GzTkVXDcHG9p7Vyo86yg4gLNS0yaWvKOQY/MjumdhFRQPZF3lC6ag==
 
 "@testing-library/dom@^7.28.1":
   version "7.28.1"

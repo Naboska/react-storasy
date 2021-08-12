@@ -1,41 +1,49 @@
-import * as React from 'react';
-import { cleanup, render, act } from '@testing-library/react';
-import { call, getItem } from '@storasy/core';
+import React, { ReactNode } from 'react';
+import { cleanup, render } from '@testing-library/react';
+import { createStorasyClient } from '@storasy/core';
 
 import { useStorasy } from './use-storasy';
+import { StorasyClientProvider } from './storasy-client-provider';
 
 afterEach(cleanup);
 
-const INITIAL = {
-  data: undefined,
-  isLoading: false,
-  isError: false,
-  isLoaded: false,
-  error: undefined,
+const setup = (child: ReactNode) => {
+  const client = createStorasyClient();
+
+  const Component = () => <StorasyClientProvider {...{ client }}>{child}</StorasyClientProvider>;
+
+  return {
+    client,
+    utils: render(<Component />),
+  };
 };
 
-it('render without crashing', () => {
-  const TestComponent: React.FC = () => {
-    const [data] = useStorasy('test');
-    return <div data-testid="test">{JSON.stringify(data)}</div>;
-  };
+describe('react-storasy test', () => {
+  test('render without crashing', () => {
+    const INITIAL = 'test';
 
-  const { getByTestId } = render(<TestComponent />);
+    const TEST = () => {
+      const { state } = useStorasy('test', null, { initialState: INITIAL });
+      return <div data-testid="test">{state}</div>;
+    };
 
-  expect(getByTestId('test').textContent).toBe(JSON.stringify(INITIAL));
+    const { utils } = setup(<TEST />);
+
+    expect(utils.getByTestId('test').textContent).toBe(INITIAL);
+  });
 });
 
-it('generator calling', () => {
-  const yieldFn = jest.fn();
-
-  const TestComponent: React.FC = () => {
-    const [{ isLoading }] = useStorasy('test', function* generator() {
-      yield call('test', yieldFn);
-    });
-    return <div data-testid="test">{isLoading ? 'loading' : 'loaded'}</div>;
-  };
-
-  const { getByTestId } = render(<TestComponent />);
-  expect(yieldFn).toHaveBeenCalledTimes(1);
-  expect(getByTestId('test').textContent).toBe('loading');
-});
+// it('generator calling', () => {
+//   const yieldFn = jest.fn();
+//
+//   const TestComponent: React.FC = () => {
+//     const [{ isLoading }] = useStorasy('test', function* generator() {
+//       yield call('test', yieldFn);
+//     });
+//     return <div data-testid="test">{isLoading ? 'loading' : 'loaded'}</div>;
+//   };
+//
+//   const { getByTestId } = render(<TestComponent />);
+//   expect(yieldFn).toHaveBeenCalledTimes(1);
+//   expect(getByTestId('test').textContent).toBe('loading');
+// });
